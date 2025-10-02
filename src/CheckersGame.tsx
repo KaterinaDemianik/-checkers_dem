@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, RotateCcw, Settings } from 'lucide-react';
 
+
 const BOARD_SIZE = 8;
 const EMPTY = 0;
 const WHITE = 1;
 const BLACK = 2;
 const WHITE_KING = 3;
 const BLACK_KING = 4;
+
 
 const evaluatePosition = (board: number[][]) => {
   let score = 0;
@@ -28,16 +30,18 @@ const evaluatePosition = (board: number[][]) => {
       }
     }
   }
-  
   return score;
 };
 
-const isKing = (piece: number) => piece === WHITE_KING || piece === BLACK_KING;
 
+
+const isKing = (piece: number) => piece === WHITE_KING || piece === BLACK_KING;
 const isPlayerPiece = (piece: number, player: number) => {
   if (player === WHITE) return piece === WHITE || piece === WHITE_KING;
   return piece === BLACK || piece === BLACK_KING;
 };
+
+
 
 const getAllMoves = (board: number[][], player: number) => {
   const captures: any[] = [];
@@ -57,9 +61,12 @@ const getAllMoves = (board: number[][], player: number) => {
       }
     }
   }
-  
+
     return captures.length > 0 ? captures : regularMoves;
+
 };
+
+
 
 const getPieceMoves = (board: number[][], row: number, col: number) => {
   const piece = board[row][col];
@@ -97,9 +104,10 @@ const getPieceMoves = (board: number[][], row: number, col: number) => {
       }
     });
   }
-  
   return moves;
 };
+
+
 
 const findAllCaptures = (board: number[][], row: number, col: number, currentPath: any[], captured: string[]) => {
   const piece = board[row][col];
@@ -154,6 +162,8 @@ const findAllCaptures = (board: number[][], row: number, col: number, currentPat
   return sequences;
 };
 
+
+
 const applyMove = (board: number[][], move: any) => {
   const newBoard = board.map(row => [...row]);
   const { from, to, captures } = move;
@@ -174,6 +184,8 @@ const applyMove = (board: number[][], move: any) => {
   
   return newBoard;
 };
+
+
 
 const minimax = (board: number[][], depth: number, alpha: number, beta: number, maximizingPlayer: boolean, player: number) => {
   if (depth === 0) {
@@ -222,6 +234,8 @@ const minimax = (board: number[][], depth: number, alpha: number, beta: number, 
     return { score: minEval, move: bestMove };
   }
 };
+
+
 
 const CheckersGame = () => {
   const [board, setBoard] = useState<number[][] | null>(null);
@@ -282,6 +296,8 @@ const CheckersGame = () => {
     }
   }, [board, currentPlayer, winner, depth, thinking]);
   
+
+
   const handleCellClick = (row: number, col: number) => {
     if (currentPlayer !== WHITE || winner || thinking) return;
     
@@ -323,6 +339,9 @@ const CheckersGame = () => {
     setThinking(false);
   };
   
+
+
+
   const getPieceSymbol = (piece: number) => {
     if (piece === WHITE) return (
       <span className="inline-block w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border-2 border-gray-300 shadow-md"></span>
@@ -460,4 +479,8 @@ const CheckersGame = () => {
   );
 };
 
+
+
 export default CheckersGame;
+
+
